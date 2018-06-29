@@ -1,0 +1,21 @@
+{
+  "name": "typescript-fiddles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nathan Birkes <nbirkes@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^10.5.1",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.266.1"
+  }
+}
