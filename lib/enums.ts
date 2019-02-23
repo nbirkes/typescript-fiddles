@@ -1,4 +1,4 @@
-(() => {
+export function enums(): void {
   enum Birkes {
     Nathan = 'nathan',
     Courtney = 'courtney',
@@ -44,9 +44,8 @@
   console.log(dad.toString());
   console.log(typeof dad);
   console.log(JSON.stringify({ dad }, null, 2));
+}
 
-  function getX(): string {
-    return 'benny';
-  }
-})();
-
+function getX(): string {
+  return 'benny';
+}
