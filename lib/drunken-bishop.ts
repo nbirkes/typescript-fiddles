@@ -9,10 +9,12 @@ export function drunkenBishop(): void {
 
 export class DrunkenBishop {
   private readonly room: string[][];
-  private readonly input: string;
+  private readonly originalInput: string;
+  private readonly parts: string[];
 
   constructor(input: string) {
-    this.input = input;
+    this.originalInput = input;
+    this.parts = input.split(':');
     this.room = buildRoom();
   }
 
