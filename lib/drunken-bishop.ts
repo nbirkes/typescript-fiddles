@@ -1,41 +1,69 @@
 // https://codegolf.stackexchange.com/questions/59670/the-drunken-bishop
 
-const ROOM_HEIGHT = 8;
-const ROOM_WIDTH = 17;
-const X = 8;
-const Y = 4;
 const UP = -1;
 const DOWN = 1;
 const LEFT = -1;
 const RIGHT = 1;
+const S_KEY = 15;
+const E_KEY = 16;
+
+const CHAR_MAP = new Map<number, string>([
+  [0, ' '],
+  [1, '.'],
+  [2, 'o'],
+  [3, '+'],
+  [4, '='],
+  [5, '*'],
+  [6, 'B'],
+  [7, 'O'],
+  [8, 'X'],
+  [9, '@'],
+  [10, '%'],
+  [11, '&'],
+  [12, '#'],
+  [13, '/'],
+  [14, '^'],
+  [15, 'S'],
+  [16, 'E'],
+]);
 
 export function drunkenBishop(): void {
-  let db = new DrunkenBishop('37:e4:6a:2d:48:38:1a:0a:f3:72:6d:d9:17:6b:bd:5e', ROOM_HEIGHT, ROOM_WIDTH, X, Y);
+  let db = new DrunkenBishop('16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48');
   console.log(db.render());
 }
 
 export class DrunkenBishop {
   private readonly roomHeight: number;
   private readonly roomWidth: number;
-  private readonly room: string[][];
+  private readonly room: number[][];
   private readonly input: string;
   private readonly steps: string[];
   private x: number;
   private y: number;
 
-  constructor(input: string, roomHeight: number, roomWidth: number, x: number, y: number) {
+  constructor(input: string) {
     this.input = input;
-    this.roomHeight = roomHeight;
-    this.roomWidth = roomWidth;
-    this.x = x;
-    this.y = y;
+    this.roomHeight = 9;
+    this.roomWidth = 17;
+    this.x = 8;
+    this.y = 4;
     this.steps = this.buildSteps();
     this.room = this.buildRoom();
     this.markPosition();
     this.run();
   }
 
-  buildSteps(): string[] {
+  render(): string {
+    const wall = '+' + '-'.repeat(this.roomWidth) + '+';
+    const rows = this.room.reduce((acc: string[], cur: number[]) => {
+      acc.push(cur.map(it => valueToChar(it)).join(''));
+      return acc;
+    }, []);
+
+    return wall + '\n' + rows.map(it => `|${it}|\n`).join('') + wall;
+  }
+
+  private buildSteps(): string[] {
     return this.input.split(':').reduce((acc: string[], cur: string) => {
       let octet = hexToBin(cur);
       acc.push(octet.substr(6, 2));
@@ -46,35 +74,40 @@ export class DrunkenBishop {
     }, []);
   }
 
-  render(): string {
-    let result = '+-----------------+\n';
-    for (let w = 0;w< this.room.length;w++) {
-      result += '|';
-      for (let h = 0;h<this.room[w].length;h++) {
-        result += this.room[w][h];
-      }
-      result += w === this.room.length ? '|' : '|\n';
-    }
-    result += '+-----------------+';
-    return result;
+  private getValue(x: number, y: number): number {
+    return this.room[y][x];
   }
 
-  markPosition(): void {
-    try {
-      this.room[this.y][this.x] = 'S';
-    } catch (e) {
-      console.log(this.x, this.y, e.message);
-    }
+  private setValue(x: number, y: number, value: number): void {
+    this.room[y][x] = value;
   }
 
-  run(): void {
+  private markStart(): void {
+    this.markPosition(S_KEY);
+  }
+
+  private markEnd(): void {
+    this.markPosition(E_KEY);
+  }
+
+  private markPosition(override?: number): void {
+    if (override !== undefined) this.setValue(this.x, this.y, override);
+    const value = this.getValue(this.x, this.y);
+    if (value === S_KEY) return;
+    if (value === E_KEY) return;
+    this.setValue(this.x, this.y, value + 1);
+  }
+
+  private run(): void {
+    this.markStart();
     for (let step of this.steps) {
       this.move(stepToDirection(step));
       this.markPosition();
     }
+    this.markEnd();
   }
 
-  move(direction: [number, number]): void {
+  private move(direction: [number, number]): void {
     let [x, y] = direction;
     this.moveX(x);
     this.moveY(y);
@@ -83,23 +116,23 @@ export class DrunkenBishop {
   private moveX(x: number): void {
     let newX = this.x + x;
     if (newX < 0) return;
-    if (newX > this.roomWidth) return;
+    if (newX > this.roomWidth - 1) return;
     this.x = newX;
   }
 
   private moveY(y: number): void {
     let newY = this.y + y;
     if (newY < 0) return;
-    if (newY > this.roomHeight) return;
+    if (newY > this.roomHeight - 1) return;
     this.y = newY;
   }
 
-  buildRoom(): string[][] {
-    let room: string[][] = [];
+  private buildRoom(): number[][] {
+    let room: number[][] = [];
     for (let h = 0; h < this.roomHeight; h++) {
       room.push([]);
       for (let w = 0; w < this.roomWidth; w++) {
-        room[h].push(' ');
+        room[h].push(0);
       }
     }
     return room;
@@ -123,4 +156,10 @@ function stepToDirection(step: string): [number, number] {
     default:
       throw new Error(`Step is invalid: ${step}`);
   }
+}
+
+function valueToChar(value: number): string {
+  const char = CHAR_MAP.get(value);
+  if (!char) throw new Error(`Value not found: ${value}`);
+  return char;
 }

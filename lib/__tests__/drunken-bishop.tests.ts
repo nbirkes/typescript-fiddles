@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { buildRoom, DrunkenBishop } from '../drunken-bishop';
+import { DrunkenBishop } from '../drunken-bishop';
 
 describe('drunken-bishop', function() {
   it('solves', function() {
@@ -20,37 +20,5 @@ describe('drunken-bishop', function() {
     const db = new DrunkenBishop(input);
     const actual = db.render();
     expect(actual).to.equal(expected);
-  });
-  it('can render empty room', function() {
-    const expected =
-      '+-----------------+\n' +
-      '|                 |\n' +
-      '|                 |\n' +
-      '|                 |\n' +
-      '|                 |\n' +
-      '|                 |\n' +
-      '|                 |\n' +
-      '|                 |\n' +
-      '|                 |\n' +
-      '+-----------------+';
-
-    const db = new DrunkenBishop('');
-    const actual = db.render();
-    expect(actual).to.equal(expected);
-  });
-  it('buildRoom can build room', function() {
-    const expected = [
-      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-    ];
-
-    const actual = buildRoom();
-    expect(actual).to.deep.equal(expected);
   });
 });
