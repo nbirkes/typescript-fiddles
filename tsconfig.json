@@ -12,7 +12,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "preserveConstEnums": true,
-    "target": "ES5",
+    "target": "es6",
     "pretty": true,
     "sourceMap": true,
     "rootDir": "./lib",

@@ -39,5 +39,17 @@ export function main() {
 
   let blah = new Blah();
 
-  console.log(blah[getClassNameSymbol]())
+  console.log(blah[getClassNameSymbol]());
+
+  const iterable1: any = {};
+
+  iterable1[Symbol.iterator] = function* () {
+    yield 1;
+    yield 2;
+    yield 3;
+  };
+
+  for (let x of iterable1) {
+    console.log(x);
+  }
 }
