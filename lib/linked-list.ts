@@ -1,26 +1,20 @@
-main();
 
-function main(): void {
-  let list = new LinkedList();
-  list.insertAtBeginning('one');
-  list.insertAtEnd('three');
-  list.insertAt('two', 1);
-}
-
-class LinkedList<T> {
+export class LinkedList<T> {
   private head?: Node<T>;
 
-  constructor() {
+  constructor(initialValue?: T[]) {
+    if (!initialValue) return;
+    initialValue.forEach(it => this.append(it));
   }
 
-  insertAtBeginning(data: T): Node<T> {
+  prepend(data: T): Node<T> {
     let newNode = new Node(data);
     newNode.next = this.head;
     this.head = newNode;
     return this.head;
   }
 
-  insertAtEnd(data: T): Node<T> {
+  append(data: T): Node<T> {
     let newNode = new Node(data);
     if (!this.head) {
       this.head = newNode;
@@ -36,7 +30,13 @@ class LinkedList<T> {
     return this.head;
   }
 
-  getAt(index: number): Node<T> | undefined {
+  getValueAt(index: number): T | undefined {
+    let node = this.getNodeAt(index);
+    if (!node) return undefined;
+    return node.data;
+  }
+
+  private getNodeAt(index: number): Node<T> | undefined {
     let counter = 0;
     let node = this.head;
 
@@ -62,7 +62,7 @@ class LinkedList<T> {
       return undefined;
     }
 
-    const previous = this.getAt(index - 1);
+    const previous = this.getNodeAt(index - 1);
 
     if (!previous) return undefined;
 
@@ -73,7 +73,7 @@ class LinkedList<T> {
     return this.head
   }
 
-  deleteFirstNode(): Node<T> | undefined {
+  deleteFirst(): Node<T> | undefined {
     if (!this.head) {
       return undefined;
     }
@@ -82,7 +82,7 @@ class LinkedList<T> {
     return this.head;
   }
 
-  deleteLastNode(): Node<T> | undefined {
+  deleteLast(): Node<T> | undefined {
     if (!this.head) {
       return undefined;
     }
@@ -115,7 +115,7 @@ class LinkedList<T> {
       return undefined;
     }
 
-    const previous = this.getAt(index - 1);
+    const previous = this.getNodeAt(index - 1);
 
     if (!previous || !previous.next) {
       return undefined;
@@ -125,17 +125,40 @@ class LinkedList<T> {
     return this.head
   }
 
-  deleteList(): void {
+  clear(): void {
     this.head = undefined;
+  }
+
+  toArray(): T[] {
+    const nodes: T[] = [];
+
+    let currentNode = this.head;
+    while (currentNode) {
+      nodes.push(currentNode.data);
+      currentNode = currentNode.next;
+    }
+
+    return nodes;
   }
 }
 
 class Node<T> {
-  private readonly data: T;
+  readonly data: T;
   next?: Node<T>;
 
   constructor(data: T, next?: Node<T>) {
     this.data = data;
     this.next = next;
   }
+}
+
+main();
+
+function main(): void {
+  let list = new LinkedList();
+  list.prepend('one');
+  list.append('three');
+  list.insertAt('two', 1);
+
+  console.log(list.toArray());
 }
