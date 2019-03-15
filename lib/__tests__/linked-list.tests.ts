@@ -84,4 +84,13 @@ describe('linked-list', function() {
       expect(() => list.insertAt(3, 'three')).to.throw('Index out of bounds');
     });
   });
+  describe('deleteFirst', function() {
+    it('deletes first', function() {
+      const expected = ['two', 'three'];
+      let list = new LinkedList(['one', 'two', 'three']);
+      list.deleteFirst();
+      const actual = list.toArray();
+      expect(actual).to.deep.equal(expected);
+    });
+  });
 });
