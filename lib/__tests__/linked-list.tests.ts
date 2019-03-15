@@ -67,4 +67,21 @@ describe('linked-list', function() {
       expect(actual).to.deep.equal(expected);
     });
   });
+  describe('insertValueAt', function() {
+    it('inserts at index 1', function() {
+      const expected = ['one', 'two', 'three'];
+      let list = new LinkedList(['one', 'three']);
+      list.insertAt(1, 'two');
+      const actual = list.toArray();
+      expect(actual).to.deep.equal(expected);
+    });
+    it('does not insert at index -1', function() {
+      let list = new LinkedList(['one', 'two']);
+      expect(() => list.insertAt(-1, 'three')).to.throw('Index out of bounds');
+    });
+    it('inserts at end when index too high', function() {
+      let list = new LinkedList(['one', 'two']);
+      expect(() => list.insertAt(3, 'three')).to.throw('Index out of bounds');
+    });
+  });
 });

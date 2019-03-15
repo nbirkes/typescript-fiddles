@@ -51,7 +51,9 @@ export class LinkedList<T> {
     return undefined;
   }
 
-  insertAt(data: T, index: number): Node<T> | undefined {
+  insertAt(index: number, data: T): Node<T> | undefined {
+    if (index < 0) throw new Error('Index out of bounds');
+
     if (!this.head) {
       this.head = new Node(data);
       return undefined;
@@ -64,7 +66,7 @@ export class LinkedList<T> {
 
     const previous = this.getNodeAt(index - 1);
 
-    if (!previous) return undefined;
+    if (!previous) throw new Error('Index out of bounds');
 
     let newNode = new Node(data);
     newNode.next = previous.next;
@@ -140,6 +142,10 @@ export class LinkedList<T> {
 
     return nodes;
   }
+
+  length(): number {
+    return this.toArray().length;
+  }
 }
 
 class Node<T> {
@@ -150,15 +156,4 @@ class Node<T> {
     this.data = data;
     this.next = next;
   }
-}
-
-main();
-
-function main(): void {
-  let list = new LinkedList();
-  list.prepend('one');
-  list.append('three');
-  list.insertAt('two', 1);
-
-  console.log(list.toArray());
 }
