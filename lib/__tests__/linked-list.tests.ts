@@ -93,4 +93,13 @@ describe('linked-list', function() {
       expect(actual).to.deep.equal(expected);
     });
   });
+  describe('deleteLast', function() {
+    it('deletes last', function() {
+      const expected = ['one', 'two'];
+      let list = new LinkedList(['one', 'two', 'three']);
+      list.deleteLast();
+      const actual = list.toArray();
+      expect(actual).to.deep.equal(expected);
+    });
+  });
 });

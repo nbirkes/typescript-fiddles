@@ -72,7 +72,7 @@ export class LinkedList<T> {
     newNode.next = previous.next;
     previous.next = newNode;
 
-    return this.head
+    return this.head;
   }
 
   deleteFirst(): Node<T> | undefined {
