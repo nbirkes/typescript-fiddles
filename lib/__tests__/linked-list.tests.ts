@@ -102,4 +102,13 @@ describe('linked-list', function() {
       expect(actual).to.deep.equal(expected);
     });
   });
+  describe('deleteAt', function() {
+    it('deletes last', function() {
+      const expected = ['one', 'three'];
+      let list = new LinkedList(['one', 'two', 'three']);
+      list.deleteAt(1);
+      const actual = list.toArray();
+      expect(actual).to.deep.equal(expected);
+    });
+  });
 });
