@@ -120,4 +120,13 @@ describe('linked-list', function() {
       expect(actual).to.deep.equal(expected);
     });
   });
+  describe('reverse', function() {
+    it('reversess list', function() {
+      const expected: string[] = ['three', 'two', 'one'];
+      let list = new LinkedList(['one', 'two', 'three']);
+      list.reverse();
+      const actual = list.toArray();
+      expect(actual).to.deep.equal(expected);
+    });
+  });
 });
