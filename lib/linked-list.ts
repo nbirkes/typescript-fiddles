@@ -132,28 +132,17 @@ export class LinkedList<T> {
   }
 
   reverse(): void {
-    if (!this.head) return;
+    let prev: Node<T> | undefined = undefined;
+    let current = this.head;
+    let next: Node<T> | undefined = undefined;
 
-    let currentNode: Node<T> | undefined = this.head;
-    let previousNode = this.head.next;
-
-    while (currentNode) {
-      console.log('Before', currentNode);
-      if (currentNode.next) {
-        // previousNode = currentNode;
-        currentNode.data = currentNode.next.data;
-        currentNode = currentNode.next;
-      }
-      else {
-        console.log('Final', currentNode);
-        previousNode.next = undefined;
-        currentNode.next = previousNode;
-        this.head = currentNode;
-        break;
-      }
-      if (currentNode.next) previousNode = currentNode;
-      console.log('After', currentNode);
+    while (current) {
+      next = current.next;
+      current.next = prev;
+      prev = current;
+      current = next;
     }
+    this.head = prev;
   }
 
   toArray(): T[] {
