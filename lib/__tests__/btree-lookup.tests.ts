@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { Node } from '../models/types';
-import { lookup } from '../btree-lookup';
+import { lookup } from '../btree/lookup';
 
 describe('btree-lookup', function() {
   it('returns true if found', function() {

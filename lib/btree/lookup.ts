@@ -1,4 +1,4 @@
-import { Node } from './models/types';
+import { Node } from '../models/types';
 
 export function lookup(node: Node | null, target: number): boolean {
   if (node === null) return false;
