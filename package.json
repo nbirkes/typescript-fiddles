@@ -16,12 +16,16 @@
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
     "@types/node": "^10.5.1",
+    "@types/node-fetch": "^2.3.4",
+    "@types/stream-throttle": "^0.1.0",
     "chai": "^4.2.0",
     "mocha": "^6.0.1",
     "ts-node": "^8.0.2",
     "typescript": "^2.9.2"
   },
   "dependencies": {
-    "aws-sdk": "^2.266.1"
+    "aws-sdk": "^2.266.1",
+    "node-fetch": "^2.6.0",
+    "stream-throttle": "^0.1.3"
   }
 }
