@@ -29,6 +29,9 @@ export function enums(): void {
     case Birkes.Nathan:
       console.log('Hello Nathan!');
       break;
+    case Birkes.Courtney:
+      console.log('Hello Courtney!');
+      break;
     default:
       console.log('I dont know you');
   }
