@@ -24,7 +24,7 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
-    "aws-sdk": "^2.266.1",
+    "aws-sdk": "^2.814.0",
     "node-fetch": "^2.6.0",
     "stream-throttle": "^0.1.3"
   }
